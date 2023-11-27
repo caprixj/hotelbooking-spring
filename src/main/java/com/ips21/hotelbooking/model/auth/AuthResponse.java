@@ -1,4 +1,4 @@
-package com.ips21.hotelbooking.auth;
+package com.ips21.hotelbooking.model.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

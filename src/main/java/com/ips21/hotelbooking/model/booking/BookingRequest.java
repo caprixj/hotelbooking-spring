@@ -1,4 +1,4 @@
-package com.ips21.hotelbooking.auth;
+package com.ips21.hotelbooking.model.booking;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RegisterRequest {
+public class BookingRequest {
 
-    private String username;
-    private String password;
+    private String email;
+    private int roomNumber;
+
 }

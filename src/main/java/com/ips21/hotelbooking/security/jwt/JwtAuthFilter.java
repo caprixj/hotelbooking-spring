@@ -1,4 +1,4 @@
-package com.ips21.hotelbooking.jwt;
+package com.ips21.hotelbooking.security.jwt;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;

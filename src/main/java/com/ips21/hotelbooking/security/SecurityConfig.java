@@ -1,6 +1,6 @@
-package com.ips21.hotelbooking.config;
+package com.ips21.hotelbooking.security;
 
-import com.ips21.hotelbooking.jwt.JwtAuthFilter;
+import com.ips21.hotelbooking.security.jwt.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -23,20 +23,19 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-            .csrf()
-            .disable()
+            .csrf().disable()
             .authorizeHttpRequests()
-            .requestMatchers("/admin/**")
-            .permitAll()
-            .anyRequest()
-            .authenticated()
+            .requestMatchers("/**").permitAll()
+            .requestMatchers("/bookroom/order/**").authenticated()
+//            .requestMatchers("/admin/**").hasAnyAuthority("ADMIN", "SUPERVISOR")
+//            .anyRequest().authenticated()
             .and()
             .sessionManagement()
             .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
             .and()
             .authenticationProvider(authenticationProvider)
             .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
+
 }

@@ -1,5 +1,6 @@
-package com.ips21.hotelbooking.admin;
+package com.ips21.hotelbooking.model.user;
 
+import com.ips21.hotelbooking.model.room.Room;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,22 +12,33 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 import java.util.List;
+import java.util.Set;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "admin")
-public class Admin implements UserDetails {
+@Table(name = "users")
+public class UserEntity implements UserDetails {
 
     @Id
     @GeneratedValue
-    private Long id;
-    private String username;
+    private long id;
+
+    private String email;
+
     private String password;
+
     @Enumerated(EnumType.STRING)
-    private AdminRole role;
+    private UserRole role;
+
+    @OneToMany(mappedBy = "owner")
+    private Set<Room> bookedRooms;
+
+    public void addBookedRoom(Room newRoom) {
+        bookedRooms.add(newRoom);
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -40,7 +52,7 @@ public class Admin implements UserDetails {
 
     @Override
     public String getUsername() {
-        return username;
+        return email;
     }
 
     @Override
@@ -62,4 +74,5 @@ public class Admin implements UserDetails {
     public boolean isEnabled() {
         return true;
     }
+
 }
