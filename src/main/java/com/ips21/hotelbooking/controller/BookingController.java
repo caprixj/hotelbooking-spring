@@ -25,16 +25,11 @@ public class BookingController {
 
     @PostMapping("/order")
     public ResponseEntity<String> bookRoom(@RequestBody BookingRequest request) {
-        return ResponseEntity.ok(service.bookRoom(request));
-//        String response;
-//
-//        try {
-//            response = service.bookRoom(request);
-//            return ResponseEntity.ok(response);
-//        } catch (RuntimeErrorException e) {
-//            System.out.println(e.getMessage());
-//            return ResponseEntity.badRequest().build();
-//        }
+        try {
+            return ResponseEntity.ok(service.bookRoom(request));
+        } catch (RuntimeException e) {
+            return ResponseEntity.badRequest().build();
+        }
     }
 
 }

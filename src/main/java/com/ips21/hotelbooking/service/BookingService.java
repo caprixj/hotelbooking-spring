@@ -8,7 +8,6 @@ import com.ips21.hotelbooking.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
-import javax.management.RuntimeErrorException;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,27 +25,20 @@ public class BookingService {
     public String bookRoom(BookingRequest request) {
         Optional<UserEntity> userOptional = userRepository.findByEmail(request.getEmail());
         if (userOptional.isEmpty())
-            throw new RuntimeErrorException(
-                new Error("User has not been found in database!")
-            );
+            throw new RuntimeException(new Error("User has not been found in database!"));
 
         Optional<Room> roomOptional = roomRepository.findRoomByNumber(request.getRoomNumber());
         if (roomOptional.isEmpty())
-            throw new RuntimeErrorException(
-                new Error("Room has not been found in database!")
-            );
+            throw new RuntimeException(new Error("Room has not been found in database!"));
 
         UserEntity user = userOptional.get();
         Room bookedRoom = roomOptional.get();
 
         if (bookedRoom.getOwner() != null) {
             if (bookedRoom.getOwner().getId() == user.getId())
-                throw new RuntimeErrorException(
-                    new Error("This room is already booked by this user!")
-                );
-            else throw new RuntimeErrorException(
-                    new Error("This room is already booked by another user!")
-                );
+                throw new RuntimeException(new Error("This room is already booked by this user!"));
+            else
+                throw new RuntimeException(new Error("This room is already booked by another user!"));
         }
 
         user.addBookedRoom(bookedRoom);
