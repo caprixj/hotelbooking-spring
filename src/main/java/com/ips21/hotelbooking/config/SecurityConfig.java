@@ -1,6 +1,6 @@
-package com.ips21.hotelbooking.security;
+package com.ips21.hotelbooking.config;
 
-import com.ips21.hotelbooking.security.jwt.JwtAuthFilter;
+import com.ips21.hotelbooking.jwt.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

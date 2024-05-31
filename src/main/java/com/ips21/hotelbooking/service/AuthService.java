@@ -7,7 +7,7 @@ import com.ips21.hotelbooking.model.auth.SignUpRequest;
 import com.ips21.hotelbooking.model.user.UserEntity;
 import com.ips21.hotelbooking.repository.UserRepository;
 import com.ips21.hotelbooking.model.user.UserRole;
-import com.ips21.hotelbooking.security.jwt.JwtService;
+import com.ips21.hotelbooking.jwt.JwtService;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;

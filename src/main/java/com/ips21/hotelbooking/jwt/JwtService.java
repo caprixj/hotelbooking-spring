@@ -1,4 +1,4 @@
-package com.ips21.hotelbooking.security.jwt;
+package com.ips21.hotelbooking.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
