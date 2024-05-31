@@ -1,8 +1,9 @@
 package com.ips21.hotelbooking.service;
 
+import com.ips21.hotelbooking.exceptions.UserAlreadyExistsException;
 import com.ips21.hotelbooking.model.auth.AuthResponse;
 import com.ips21.hotelbooking.model.auth.LoginRequest;
-import com.ips21.hotelbooking.model.auth.RegisterRequest;
+import com.ips21.hotelbooking.model.auth.SignUpRequest;
 import com.ips21.hotelbooking.model.user.UserEntity;
 import com.ips21.hotelbooking.repository.UserRepository;
 import com.ips21.hotelbooking.model.user.UserRole;
@@ -27,7 +28,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
 
     @Nullable
-    public AuthResponse register(RegisterRequest request) {
+    public AuthResponse signup(SignUpRequest request) {
         String email = request.getEmail();
         if (email == null || email.isEmpty())
             return null;
@@ -37,7 +38,7 @@ public class AuthService {
             return null;
 
         if (repository.findByEmail(email).isPresent())
-            throw new UnsupportedOperationException("Such user already exists!");
+            throw new UserAlreadyExistsException("");
 
         UserEntity user = UserEntity.builder()
             .email(email)
@@ -67,7 +68,7 @@ public class AuthService {
         );
 
         UserEntity user = repository.findByEmail(email)
-            .orElseThrow(() -> new UsernameNotFoundException("Admin is not found!"));
+            .orElseThrow(() -> new UsernameNotFoundException(""));
 
         return AuthResponse.builder()
             .token(jwtService.generateToken(user))
