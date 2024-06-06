@@ -5,13 +5,10 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class LoginRequest {
+public class LoginRequest extends AuthRequest {
 
-    private String email;
-    private String password;
-
+    @Override
+    public void validateCredentials() {
+        super.validateCredentials();
+    }
 }

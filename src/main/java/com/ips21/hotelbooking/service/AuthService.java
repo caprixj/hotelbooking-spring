@@ -16,6 +16,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import static com.ips21.hotelbooking.constants.Constants.AuthErrorMessages.USER_ALREADY_EXISTS;
+import static com.ips21.hotelbooking.constants.Constants.AuthErrorMessages.USER_NOT_FOUND;
+
 @Service
 @RequiredArgsConstructor
 public class AuthService {
@@ -30,15 +33,12 @@ public class AuthService {
     @Nullable
     public AuthResponse signup(SignUpRequest request) {
         String email = request.getEmail();
-        if (email == null || email.isEmpty())
-            return null;
-
         String password = request.getPassword();
-        if (password == null || password.isEmpty())
-            return null;
+
+        request.validateCredentials();
 
         if (repository.findByEmail(email).isPresent())
-            throw new UserAlreadyExistsException("");
+            throw new UserAlreadyExistsException(USER_ALREADY_EXISTS);
 
         UserEntity user = UserEntity.builder()
             .email(email)
@@ -56,19 +56,16 @@ public class AuthService {
     @Nullable
     public AuthResponse login(LoginRequest request) {
         String email = request.getEmail();
-        if (email == null || email.isEmpty())
-            return null;
-
         String password = request.getPassword();
-        if (password == null || password.isEmpty())
-            return null;
+
+        request.validateCredentials();
 
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(email, password)
         );
 
         UserEntity user = repository.findByEmail(email)
-            .orElseThrow(() -> new UsernameNotFoundException(""));
+            .orElseThrow(() -> new UsernameNotFoundException(USER_NOT_FOUND));
 
         return AuthResponse.builder()
             .token(jwtService.generateToken(user))

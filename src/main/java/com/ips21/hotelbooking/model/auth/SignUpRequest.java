@@ -1,17 +1,9 @@
 package com.ips21.hotelbooking.model.auth;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+public class SignUpRequest extends AuthRequest {
 
-@Data
-@Builder
-@AllArgsConstructor
-@NoArgsConstructor
-public class SignUpRequest {
-
-    private String email;
-    private String password;
-
+    @Override
+    public void validateCredentials() {
+        super.validateCredentials();
+    }
 }

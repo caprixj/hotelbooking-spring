@@ -11,6 +11,9 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
+import static com.ips21.hotelbooking.constants.Constants.BookingErrorMessages.*;
+import static com.ips21.hotelbooking.constants.Constants.BookingMessages.BOOKED_SUCCESS;
+
 @Service
 @RequiredArgsConstructor
 public class BookingService {
@@ -25,20 +28,20 @@ public class BookingService {
     public String bookRoom(BookingRequest request) {
         Optional<UserEntity> userOptional = userRepository.findByEmail(request.getEmail());
         if (userOptional.isEmpty())
-            throw new RuntimeException(new Error("User has not been found in database!"));
+            throw new RuntimeException(USER_NOT_FOUND);
 
         Optional<Room> roomOptional = roomRepository.findRoomByNumber(request.getRoomNumber());
         if (roomOptional.isEmpty())
-            throw new RuntimeException(new Error("Room has not been found in database!"));
+            throw new RuntimeException(ROOM_NOT_FOUND);
 
         UserEntity user = userOptional.get();
         Room bookedRoom = roomOptional.get();
 
         if (bookedRoom.getOwner() != null) {
             if (bookedRoom.getOwner().getId() == user.getId())
-                throw new RuntimeException(new Error("This room is already booked by this user!"));
+                throw new RuntimeException(ROOM_BOOKED_TWICE);
             else
-                throw new RuntimeException(new Error("This room is already booked by another user!"));
+                throw new RuntimeException(ROOM_NOT_FREE);
         }
 
         user.addBookedRoom(bookedRoom);
@@ -47,6 +50,6 @@ public class BookingService {
         bookedRoom.setOwner(user);
         roomRepository.save(bookedRoom);
 
-        return "The room has been booked successfully.";
+        return BOOKED_SUCCESS;
     }
 }
