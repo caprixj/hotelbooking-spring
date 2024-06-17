@@ -12,17 +12,17 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name = "rooms")
-public class Room {
+@Table(name = "feedbacks")
+public class Feedback {
 
     @Id
-    private int number;
+    @GeneratedValue
+    private int id;
 
-    @Enumerated(EnumType.STRING)
-    private RoomType type;
+    private String feedback_text;
 
     @ManyToOne
-    @JoinColumn(name="owner_id")
-    private UserEntity owner;
+    @JoinColumn(name="user_id")
+    private UserEntity user;
 
 }

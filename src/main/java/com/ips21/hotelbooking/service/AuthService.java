@@ -40,9 +40,12 @@ public class AuthService {
         if (repository.findByEmail(email).isPresent())
             throw new UserAlreadyExistsException(USER_ALREADY_EXISTS);
 
+        String telegramToken = UserEntity.generateTelegramToken();
+
         UserEntity user = UserEntity.builder()
             .email(email)
             .password(passwordEncoder.encode(password))
+            .telegramToken(telegramToken)
             .role(UserRole.USER)
             .build();
 

@@ -1,11 +1,9 @@
 package com.ips21.hotelbooking.model.user;
 
+import com.ips21.hotelbooking.model.room.Feedback;
 import com.ips21.hotelbooking.model.room.Room;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -16,6 +14,9 @@ import java.util.Set;
 
 @Data
 @Builder
+@Getter
+@Setter
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
@@ -30,11 +31,20 @@ public class UserEntity implements UserDetails {
 
     private String password;
 
+    private String telegramToken;
+
     @Enumerated(EnumType.STRING)
     private UserRole role;
 
     @OneToMany(mappedBy = "owner")
     private Set<Room> bookedRooms;
+
+    @OneToMany(mappedBy = "user")
+    private Set<Feedback> feedbacks;
+
+    public static String generateTelegramToken() {
+        // !!!
+    }
 
     public void addBookedRoom(Room newRoom) {
         bookedRooms.add(newRoom);
