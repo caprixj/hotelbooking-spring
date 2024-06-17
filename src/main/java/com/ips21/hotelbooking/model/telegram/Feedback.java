@@ -1,4 +1,4 @@
-package com.ips21.hotelbooking.model.room;
+package com.ips21.hotelbooking.model.telegram;
 
 import com.ips21.hotelbooking.model.user.UserEntity;
 import jakarta.persistence.*;
@@ -19,7 +19,9 @@ public class Feedback {
     @GeneratedValue
     private int id;
 
-    private String feedback_text;
+    private String feedbackText;
+
+    private String telegramUsername;
 
     @ManyToOne
     @JoinColumn(name="user_id")

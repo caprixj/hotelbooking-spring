@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import java.util.Objects;
-import java.util.concurrent.Callable;
 
 import static com.ips21.hotelbooking.constants.Constants.AuthErrorMessages.*;
 import static com.ips21.hotelbooking.constants.Constants.BookingErrorMessages.ROOM_BOOKED_TWICE;
@@ -21,7 +20,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<AuthResponse> handleSingUpUserAlreadyExistsException(UserAlreadyExistsException e) {
         return new ResponseEntity<>(
-            new AuthResponse(USER_ALREADY_EXISTS, null),
+            new AuthResponse(USER_ALREADY_EXISTS, null, null),
             HttpStatus.CONFLICT
         );
     }
@@ -29,7 +28,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<AuthResponse> handleLoginUserNotFoundException(UsernameNotFoundException e) {
         return new ResponseEntity<>(
-            new AuthResponse(USER_NOT_FOUND, null),
+            new AuthResponse(USER_NOT_FOUND, null, null),
             HttpStatus.NOT_FOUND
         );
     }
@@ -37,7 +36,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<AuthResponse> handleBadCredentialsException(BadCredentialsException e) {
         return new ResponseEntity<>(
-            new AuthResponse(BAD_CREDENTIALS, null),
+            new AuthResponse(BAD_CREDENTIALS, null, null),
             HttpStatus.UNAUTHORIZED
         );
     }
@@ -45,7 +44,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<AuthResponse> handleInvalidEmailException(InvalidEmailException e) {
         return new ResponseEntity<>(
-            new AuthResponse(INVALID_EMAIL, null),
+            new AuthResponse(INVALID_EMAIL, null, null),
             HttpStatus.UNAUTHORIZED
         );
     }
@@ -53,7 +52,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler
     public ResponseEntity<AuthResponse> handleInvalidPasswordException(InvalidPasswordException e) {
         return new ResponseEntity<>(
-            new AuthResponse(INVALID_PASSWORD, null),
+            new AuthResponse(INVALID_PASSWORD, null, null),
             HttpStatus.UNAUTHORIZED
         );
     }

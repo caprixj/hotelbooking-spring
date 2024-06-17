@@ -1,4 +1,4 @@
-package com.ips21.hotelbooking.model.telegram_bot.auth_telegram;
+package com.ips21.hotelbooking.model.telegram.save_feedback;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,9 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TelegramBotAuthResponse {
+public class TelegramBotSaveFeedbackResponse {
 
-    Boolean success;
+    Boolean saved;
     String message;
 
 }

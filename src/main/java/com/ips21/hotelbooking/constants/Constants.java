@@ -14,6 +14,13 @@ public final class Constants {
         public static final String INVALID_PASSWORD = "Invalid password.";
     }
 
+    public static final class TelegramBotErrorMessages {
+        public static final String TELEGRAM_TOKEN_GENERATION_ERROR
+            = "NoSuchAlgorithmException thrown while telegram token generation.";
+        public static final String INVALID_TELEGRAM_TOKEN = "Invalid telegram token.";
+        public static final String FEEDBACK_NOT_FOUND = "Feedback has not been found.";
+    }
+
     public static final class BookingErrorMessages {
         public static final String USER_NOT_FOUND = "User was not found in database while booking.";
         public static final String ROOM_NOT_FOUND = "Room was not found in database while booking.";

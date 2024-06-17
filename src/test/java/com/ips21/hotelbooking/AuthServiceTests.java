@@ -66,7 +66,7 @@ public class AuthServiceTests {
 
         // Assert
         assertNotNull(response, "AuthResponse should not be null");
-        assertEquals(token, response.getToken(), "Token should match the generated token");
+        assertEquals(token, response.getJwtToken(), "Token should match the generated token");
     }
 
     @Test

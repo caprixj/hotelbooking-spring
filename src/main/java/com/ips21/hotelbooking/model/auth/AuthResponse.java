@@ -12,6 +12,10 @@ import lombok.NoArgsConstructor;
 public class AuthResponse {
 
     private String message;
-    private String token;
+    private String jwtToken;
+    private String telegramToken;
+
+    // !!! CHANGE FRONTEND
+    // token -> jwtToken, + telegramToken
 
 }

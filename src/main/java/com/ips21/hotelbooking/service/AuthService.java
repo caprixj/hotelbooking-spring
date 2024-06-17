@@ -16,8 +16,10 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import static com.ips21.hotelbooking.constants.Constants.AuthErrorMessages.USER_ALREADY_EXISTS;
-import static com.ips21.hotelbooking.constants.Constants.AuthErrorMessages.USER_NOT_FOUND;
+import java.security.NoSuchAlgorithmException;
+
+import static com.ips21.hotelbooking.constants.Constants.AuthErrorMessages.*;
+import static com.ips21.hotelbooking.constants.Constants.TelegramBotErrorMessages.TELEGRAM_TOKEN_GENERATION_ERROR;
 
 @Service
 @RequiredArgsConstructor
@@ -40,19 +42,17 @@ public class AuthService {
         if (repository.findByEmail(email).isPresent())
             throw new UserAlreadyExistsException(USER_ALREADY_EXISTS);
 
-        String telegramToken = UserEntity.generateTelegramToken();
-
         UserEntity user = UserEntity.builder()
             .email(email)
             .password(passwordEncoder.encode(password))
-            .telegramToken(telegramToken)
+            .telegramToken(generateTelegramToken(email))
             .role(UserRole.USER)
             .build();
 
         repository.save(user);
 
         return AuthResponse.builder()
-            .token(jwtService.generateToken(user))
+            .jwtToken(jwtService.generateToken(user))
             .build();
     }
 
@@ -71,8 +71,18 @@ public class AuthService {
             .orElseThrow(() -> new UsernameNotFoundException(USER_NOT_FOUND));
 
         return AuthResponse.builder()
-            .token(jwtService.generateToken(user))
+            .jwtToken(jwtService.generateToken(user))
             .build();
+    }
+
+    private String generateTelegramToken(String email) {
+        try {
+            return UserEntity.generateTelegramToken(email);
+        } catch (NoSuchAlgorithmException ignored) {
+            throw new RuntimeException(
+                new Error(TELEGRAM_TOKEN_GENERATION_ERROR)
+            );
+        }
     }
 
 }

@@ -1,4 +1,4 @@
-package com.ips21.hotelbooking.model.telegram_bot.save_feedback;
+package com.ips21.hotelbooking.model.telegram.save_feedback;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TelegramBotSaveFeedbackRequest {
 
-    Integer user_id;
-    String feedback_text;
+    String telegramToken;
+    String feedbackText;
+    String telegramUsername;
 
 }

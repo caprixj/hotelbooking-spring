@@ -1,4 +1,4 @@
-package com.ips21.hotelbooking.model.telegram_bot.auth_telegram;
+package com.ips21.hotelbooking.model.telegram.auth;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -9,8 +9,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class TelegramBotAuthRequest {
+public class TelegramBotAuthResponse {
 
-    String telegramToken;
+    Boolean success;
+    String message;
 
 }
